@@ -30,7 +30,8 @@ public class ServicioBean implements ServicioBeanLocal {
 
     @Override
     public List<Producto> getProductos() {
-        return this.em.createQuery("select p from Producto p").getResultList();
+        // return this.em.createQuery("select p from Producto p").getResultList();
+        return this.em.createNamedQuery("Producto.findAll").getResultList();
     }
 
     @Override
@@ -47,7 +48,11 @@ public class ServicioBean implements ServicioBeanLocal {
     // "Insert Code > Add Business Method")
     @Override
     public Producto buscarProducto(int id) {
-        return this.em.find(Producto.class, id);
+        //return this.em.find(Producto.class, id);
+        return (Producto) this.em.createNamedQuery(
+                "Producto.findByIdProducto", Producto.class)
+                .setParameter("idProducto", id)
+                .getSingleResult();
     }
 
     @Override
